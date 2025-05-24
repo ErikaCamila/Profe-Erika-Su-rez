@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="es">
+<head>
+<link rel="stylesheet" type="text/css" href="base.css" />
+<link rel="stylesheet" type="text/css" href="content.css" />
+<link rel="stylesheet" type="text/css" href="nav.css" />
+<meta http-equiv="content-type" content="text/html;  charset=utf-8" />
+<title>THE ADVENTURE BEGINS | LECTURA MAGICA </title>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<meta name="author" content="ERIKA CAMILA SUÁREZ - ANYHELA MARIA NAVAS" />
+<link rel="license" type="text/html" href="http://creativecommons.org/licenses/by-sa/4.0/" />
+<meta name="generator" content="eXeLearning 2.9 - exelearning.net" />
+<!--[if lt IE 9]><script type="text/javascript" src="exe_html5.js"></script><![endif]-->
+<script type="text/javascript" src="exe_jquery.js"></script>
+<script type="text/javascript" src="common_i18n.js"></script>
+<script type="text/javascript" src="common.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet"  type="text/css">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&display=swap" rel="stylesheet" type="text/css">
+<link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"  type="text/css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet"  type="text/css">
+
+
+<style>
+  
+  .z-index {
+    z-index: 999;
+  }
+
+  .select-container {
+    display: inline-block;
+    position: relative;
+    z-index: 999;
+  }
+
+  .font-button {
+    padding: 8px 16px;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 8px;
+    text-align: center;
+    text-decoration: none;
+    background-color: white;
+    color: black;
+    z-index: 999;
+  }
+
+  .fontButtonContainer {
+     z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* establece el wrap para que los botones se distribuyan en varias líneas */
+    gap: 5px; /* ajusta el espacio entre los botones */
+    position: static; /* fija la barra de botones en la página: static para que aparezca en la parte superior, fixed para que quede flotando */
+    top: 40px; /* fija la barra de botones en la parte superior de la página */
+    left: 0; /* fija la barra de botones en el margen izquierdo */
+    right: 0; /* fija la barra de botones en el margen derecho */
+    margin: auto; /* centra la barra de botones horizontalmente */
+  }
+    
+  /* Estilo para el desplegable */
+  select {
+    padding: 8px 4px;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 6px;
+    text-align: center;
+    text-decoration: none;
+    background-color: white;
+  }
+  
+  select option {
+  text-align: left;
+  }
+  
+</style>
+
+<script>
+
+// BatexeGo v3 Juan José de Haro 
+
+// Define los textos que se ven en pantalla. Reemplazar el texto entre comillas
+
+  // Textos del menú desplegable
+    const defaultText = 'Parámetros por defecto:'; //Descripción de la opción por defecto
+    const standardText = 'Fuente estándar'; // Fuente original del documento
+    
+    const dyslexicDesc = 'Dislexia:'; // Descripción de la opción OpenDyslexic  
+    const dyslexicText = 'OpenDyslexic'; 
+    
+    const hyperlegibleDesc = 'Deficiencias visuales:'; // Descripción de la opción Atkinson Hyperlegible
+    const hyperlegibleText = 'Atkinson Hyperlegible'; 
+    
+    const highLegibilityDesc = 'Alta legibilidad:'; // Descripción de las opciones de alta legibilidad
+    const opensansText = 'OpenSans'; 
+    const robotoText = 'Roboto'; 
+    const latoText = 'Lato'; 
+    const montserratText = 'Montserrat'; 
+
+  // Botones aumentar y disminuir fuente
+    const increaseFontText = 'A+'; // Botón para incrementar la fuente
+    const increaseFontTitle = 'Incrementa la fuente'; // Texto emergente al pasar el ratón
+    
+    const decreaseFontText = 'A-'; // Botón para reducir la fuente
+    const decreaseFontTitle = 'Reduce la fuente'; // Texto emergente al pasar el ratón
+
+  // Botón para traducir
+    const translateText = '🌐'; // Texto para el botón de traducción de Google
+    const translateTitle = 'Traduce la página'; // Texto emergente al pasar el ratón
+
+  // Botón para leer / detener la lectura en voz alta
+    let readText = 'Leer'; // Botón para leer en voz alta el contenido de la página
+    const readTextTitle ='Lee en voz alta la selección o la página entera'; // Texto emergente al pasar el ratón
+    
+    const stopText = 'Detener'; // Texto del botón para detener la lectura
+    const stopTextTitle = 'Detiene la lectura'; // Texto emergente al pasar el ratón
+  
+  // Botones para que los botones estén siempre visibles
+    let floatingFix = 'Fijar'; // Texto del botón flotante cuando está sobre el texto
+    let floatingFixTitle = 'Fija la barra de botones en la parte superior'; // Texto emergente al pasar el ratón
+    
+    let floatingFloat = 'Flotar'; //Texto del botón flotante cuando está fijo en la parte superior
+    let floatingFloatTitle = 'La barra permanecerá siempre visible';
+  
+  
+  // Enlace +Info
+    const infoText = '+Info'; // Texto del enlace +Info
+    const infoTextLink = 'https://batexego.bilateria.org'; // Destino del enlace de +Info
+
+// Fin 
+  
+
+  readText = `${readText} (${document.documentElement.lang})`; //Se añade el idioma al botón Leer
+  
+
+  let originalFont;
+  let currentFontSize;
+  let originalFontSize;
+  let isReading = false;
+  let utterance = new SpeechSynthesisUtterance();
+  let googleTranslateWidgetVisible = localStorage.getItem('googleTranslateWidgetVisible');
+
+  function setFont(font) {
+  document.body.style.fontFamily = font;
+  localStorage.setItem('font', font);
+  }
+
+  function setFontSize(size) {
+  currentFontSize = parseInt(window.getComputedStyle(document.body).getPropertyValue('font-size'));
+  currentFontSize += size;
+  document.body.style.fontSize = currentFontSize + 'px';
+  localStorage.setItem('fontSize', currentFontSize + 'px');
+  }
+  
+  
+
+function toggleGoogleTranslateWidget() {
+  if (!googleTranslateWidgetVisible) {
+    const script = document.createElement('script');
+    script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    script.id = 'google-translate-script';
+    document.head.appendChild(script);
+    
+    const googleTranslateElement = document.createElement('div');
+    googleTranslateElement.id = 'google_translate_element';
+    googleTranslateElement.style.position = 'fixed';
+    googleTranslateElement.style.top = '0';
+    googleTranslateElement.style.right = '0';
+    googleTranslateElement.style.zIndex = '1000';
+    document.body.appendChild(googleTranslateElement);
+
+    window.googleTranslateElementInit = function() {
+      new google.translate.TranslateElement({pageLanguage: 'auto', layout: google.translate.TranslateElement.FloatPosition.TOP_RIGHT}, 'google_translate_element');
+    };
+
+    googleTranslateWidgetVisible = true;
+    
+  } else {
+    const script = document.getElementById('google-translate-script');
+    script.remove();
+    
+    const googleTranslateElement = document.getElementById('google_translate_element');
+    googleTranslateElement.remove();
+
+    googleTranslateWidgetVisible = false;
+  }
+  localStorage.setItem('googleTranslateWidgetVisible',googleTranslateWidgetVisible);
+}
+
+
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+
+    googleTranslateWidgetVisible = JSON.parse(localStorage.getItem('googleTranslateWidgetVisible'));
+  if(googleTranslateWidgetVisible) {
+    googleTranslateWidgetVisible = false;
+    toggleGoogleTranslateWidget();
+  }
+
+    
+  
+    originalFont = window.getComputedStyle(document.body).getPropertyValue('font-family');
+    localStorage.setItem('originalFont', originalFont);
+    let font = localStorage.getItem('font');
+    if (!font) {
+    font = originalFont;
+    }
+    document.body.style.fontFamily = font;
+
+    let fontSize = localStorage.getItem('fontSize');
+    originalFontSize = window.getComputedStyle(document.body).getPropertyValue('font-size');
+    localStorage.setItem('originalFontSize', originalFontSize);
+    if (!fontSize) {
+    fontSize = originalFontSize
+    localStorage.setItem('fontSize', fontSize);
+    }
+    document.body.style.fontSize = fontSize;
+
+    const fontButtonContainer = document.createElement('div');
+    fontButtonContainer.classList.add('fontButtonContainer'); 
+    
+    const selectContainer = document.createElement('div');
+    selectContainer.classList.add('select-container');
+    const select = document.createElement('select');
+    select.classList.add('z-index');
+    const standardOption = document.createElement('option');
+    standardOption.value = 'standard';
+    standardOption.text = standardText;
+
+    const defaultFontOptGroup = document.createElement('optgroup');
+    defaultFontOptGroup.label = defaultText;
+    defaultFontOptGroup.appendChild(standardOption);
+
+    select.appendChild(defaultFontOptGroup);
+
+
+    const dyslexicOption = document.createElement('option');
+    dyslexicOption.value = 'dyslexic';
+    dyslexicOption.text = dyslexicText;
+    select.add(dyslexicOption);
+
+    const dyslexicOptGroup = document.createElement('optgroup');
+    dyslexicOptGroup.label = dyslexicDesc;
+    dyslexicOptGroup.appendChild(dyslexicOption);
+    select.appendChild(dyslexicOptGroup);
+
+    const hyperlegibleOption = document.createElement('option');
+    hyperlegibleOption.value = 'hyperlegible';
+    hyperlegibleOption.text = hyperlegibleText;
+    select.add(hyperlegibleOption);
+
+    const hyperlegibleOptGroup = document.createElement('optgroup');
+    hyperlegibleOptGroup.label = hyperlegibleDesc;
+    hyperlegibleOptGroup.appendChild(hyperlegibleOption);
+    select.appendChild(hyperlegibleOptGroup);
+
+    const opensansOption = document.createElement('option');
+    opensansOption.value = 'Open Sans';
+    opensansOption.text = opensansText;
+    select.add(opensansOption);
+
+    const robotoOption = document.createElement('option');
+    robotoOption.value = 'Roboto';
+    robotoOption.text = robotoText;
+    select.add(robotoOption);
+
+    const latoOption = document.createElement('option');
+    latoOption.value = 'Lato';
+    latoOption.text = latoText;
+    select.add(latoOption);
+
+    const montserratOption = document.createElement('option');
+    montserratOption.value = 'Montserrat';
+    montserratOption.text = montserratText;
+    select.add(montserratOption);  
+    
+
+    const highLegibilityOptGroup = document.createElement('optgroup');
+    highLegibilityOptGroup.label = highLegibilityDesc;
+    highLegibilityOptGroup.appendChild(latoOption);
+    highLegibilityOptGroup.appendChild(montserratOption);
+    highLegibilityOptGroup.appendChild(opensansOption);
+    highLegibilityOptGroup.appendChild(robotoOption);
+    
+    
+    
+    select.appendChild(highLegibilityOptGroup);
+
+    // Seleccionar la opción correspondiente al cargar la página
+    if (font === originalFont) { // Nueva condición
+    select.selectedIndex = 0; // Nueva línea
+    } else if (font === 'OpenDyslexic') {
+    select.selectedIndex = 1;
+    } else if (font === 'Atkinson Hyperlegible') {
+    select.selectedIndex = 2;
+    } else if (font === 'Roboto') {
+    select.selectedIndex = 6;
+    } else if (font === 'Lato') {
+    select.selectedIndex = 3;
+    } else if (font === 'Open Sans') {
+    select.selectedIndex = 5;
+    } else if (font === 'Montserrat') {
+    select.selectedIndex = 4;
+    }
+
+    select.addEventListener('change', () => {
+    const font = select.value;
+    if (font === 'standard') {
+    setFont(originalFont);
+    fontSize = originalFontSize;
+    localStorage.setItem('fontSize', fontSize);
+    document.body.style.fontSize = localStorage.getItem('originalFontSize');
+    } else if (font === 'dyslexic') {
+    setFont('OpenDyslexic');
+    } else if (font === 'hyperlegible') {
+    setFont('Atkinson Hyperlegible');
+    } else if (font === 'Open Sans') {
+    setFont('Open Sans');
+    } else if (font === 'Roboto') {
+    setFont('Roboto');
+    } else if (font === 'Lato') {
+    setFont('Lato');
+    }  else if (font === 'Montserrat') {
+    setFont('Montserrat');
+    }
+    });
+
+    selectContainer.appendChild(select);
+    fontButtonContainer.appendChild(selectContainer);
+    
+
+    const increaseFontButton = document.createElement('button');
+    increaseFontButton.classList.add('font-button');
+    increaseFontButton.textContent = increaseFontText;
+    increaseFontButton.setAttribute('title', increaseFontTitle);
+    increaseFontButton.addEventListener('click', () => setFontSize(1));
+    fontButtonContainer.appendChild(increaseFontButton);
+
+    const decreaseFontButton = document.createElement('button');
+    decreaseFontButton.classList.add('font-button');
+    decreaseFontButton.textContent = decreaseFontText;
+    decreaseFontButton.setAttribute('title', decreaseFontTitle);
+    decreaseFontButton.addEventListener('click', () => setFontSize(-1));
+    fontButtonContainer.appendChild(decreaseFontButton);
+    
+    const translateButton = document.createElement('button');
+    translateButton.classList.add('font-button');
+    translateButton.textContent = translateText;
+    translateButton.setAttribute('title', translateTitle);
+    translateButton.addEventListener('click', toggleGoogleTranslateWidget);
+    fontButtonContainer.appendChild(translateButton);
+
+  // Botón para leer en voz alta
+    const readButton = document.createElement('button');
+    readButton.classList.add('font-button');
+    readButton.textContent = readText;
+    readButton.setAttribute('title', readTextTitle);
+    
+    readButton.addEventListener('click', () => {
+    let selectedText = window.getSelection().toString();
+    let text = '';
+    let lang = document.documentElement.lang;
+    if (selectedText !== '') {
+      text = selectedText;
+      let selectedNode = window.getSelection().anchorNode;
+      while (selectedNode && selectedNode.nodeType !== Node.ELEMENT_NODE) {
+        selectedNode = selectedNode.parentNode;
+      }
+      if (selectedNode) {
+        const selectedLang = selectedNode.getAttribute('lang');
+        if (selectedLang) {
+          lang = selectedLang;
+        }
+      }
+    } else {
+      text = document.body.innerText;
+      const bodyLang = document.body.getAttribute('lang');
+      if (bodyLang) {
+        lang = bodyLang;
+      }
+    }
+
+    utterance.lang = lang;
+    utterance.text = text;
+
+    if (!isReading) {
+      isReading = true;
+      readButton.textContent = `${stopText} (${lang})`;
+      readButton.setAttribute('title', stopTextTitle);
+      speechSynthesis.speak(utterance);
+    } else {
+      isReading = false;
+      readButton.textContent = readText;
+      readButton.setAttribute('title', readTextTitle);
+      speechSynthesis.cancel();
+    }
+
+    utterance.addEventListener('end', () => {
+      isReading = false;
+      readButton.textContent = readText;
+      readButton.setAttribute('title', readTextTitle);
+    });
+  });  
+    
+    fontButtonContainer.appendChild(readButton);
+    
+  // Botón para que la barra esté siempre visible
+    const floatingButton = document.createElement('button');
+    floatingButton.classList.add('font-button');
+    floatingButton.textContent = floatingFloat;
+    floatingButton.setAttribute('title', floatingFloatTitle);
+    floatingButton.addEventListener('click', () => {
+    if (floatingButton.textContent === floatingFix) {
+      fontButtonContainer.style.position = 'static';
+      floatingButton.textContent = floatingFloat;
+      floatingButton.setAttribute('title', floatingFloatTitle);
+      localStorage.setItem('floatState', 'static');
+    } else {
+      fontButtonContainer.style.position = 'fixed';
+      floatingButton.textContent = floatingFix;
+      floatingButton.setAttribute('title', floatingFixTitle);
+      localStorage.setItem('floatState', 'fixed');
+    }
+  });
+
+    
+
+    let floatState = localStorage.getItem('floatState');
+    if (!floatState) {
+      floatState = 'static';
+      floatingButton.textContent = floatingFix;
+      floatingButton.setAttribute('title', floatingFixTitle);
+    }
+    if (floatState === 'fixed') {
+      fontButtonContainer.style.position = 'fixed';
+      floatingButton.textContent = floatingFix;
+      floatingButton.setAttribute('title', floatingFixTitle);
+    } else {
+      fontButtonContainer.style.position = 'static';
+      floatingButton.textContent = floatingFloat;
+      floatingButton.setAttribute('title', floatingFloatTitle);
+    }
+    
+    localStorage.setItem('floatState', floatState);
+    
+  fontButtonContainer.appendChild(floatingButton);
+
+
+    const infoLink = document.createElement('a');
+    infoLink.textContent = infoText;
+    infoLink.href = infoTextLink;
+    infoLink.target = '_blank';
+    infoLink.style.marginLeft = '8px';
+    infoLink.style.fontSize = '12px';
+    fontButtonContainer.appendChild(infoLink);
+
+    
+    infoLink.classList.add('z-index');
+
+    document.body.insertBefore(fontButtonContainer, document.body.firstChild);
+   
+  });
+  
+  
+
+</script>
+
+</head>
+<body class="exe-web-site" id="exe-node-1"><script type="text/javascript">document.body.className+=" js"</script>
+<div id="content">
+<p id="skipNav"><a href="#main" class="sr-av">Saltar la navegación</a></p>
+<header id="header" ><div id="headerContent">LECTURA MAGICA</div></header>
+<nav id="siteNav">
+<ul>
+   <li><a href="index.html" class="daddy main-node">FOCUSINA</a></li>
+   <li id="active"><a href="the_adventure_begins.html" class="active no-ch">THE ADVENTURE BEGINS</a></li>
+   <li><a href="lets_play.html" class="no-ch">LET'S PLAY</a></li>
+   <li><a href="lets_create.html" class="no-ch">LET'S CREATE</a></li>
+</ul>
+</nav>
+<div id='topPagination'>
+<nav class="pagination noprt">
+<a href="index.html" class="prev"><span><span>&laquo; </span>Anterior</span></a> <span class="sep">| </span><a href="lets_play.html" class="next"><span>Siguiente<span> &raquo;</span></span></a>
+</nav>
+</div>
+<div id="main-wrapper">
+<section id="main">
+<header id="nodeDecoration"><h1 id="nodeTitle">THE ADVENTURE BEGINS</h1></header>
+<article class="iDevice_wrapper textIdevice em_iDevice em_iDevice_emociones" id="id9">
+<div class="iDevice emphasis1" >
+<header class="iDevice_header"><h1 class="iDeviceTitle">Aventuras Mágicas para Mentes Curiosas: Un Cuento que Despierta tu Imaginación</h1></header>
+<div class="iDevice_inner">
+<div class="iDevice_content_wrapper">
+<div id="ta9_131_2" class="block iDevice_content">
+<div class="exe-text"><p style="text-align: center;"><iframe width="560" height="314" src="https://www.youtube.com/embed/u1vTqE1Jn7Y" allowfullscreen="allowfullscreen"></iframe></p>
+<p><strong><span style="color: #ff00ff;">El Ratón Pérez: <em>El Misterio de los Dientes Desaparecidos</em></span></strong></p>
+<p>En el reino de los sueños, donde las almohadas son nubes y las mantas alas de mariposas, vivía un pequeño ratón llamado Pérez. Era conocido por todos los niños, pues cada noche, con su pequeña mochila y su capa de estrellas, recorría el mundo recogiendo dientes caídos y dejando pequeños tesoros a cambio.</p>
+<p>Pero una mañana, algo extraño ocurrió. Pérez se despertó con su mochila llena de cartas de niños que no habían recibido sus regalos. "¡Esto es un gran misterio!", exclamó Pérez. Y sin perder un minuto, se puso su sombrero de detective y comenzó a investigar.</p>
+<p>Lo primero que hizo fue visitar a Carla, una niña muy lista que siempre tenía respuestas para todo. Carla le dijo que había escuchado ruidos extraños en la noche, como pequeños pasitos en el tejado. "¡Debes investigar esos ruidos!", sugirió Carla. Pérez anotó cada detalle en su libreta y continuó su búsqueda.</p>
+<p>Luego fue a ver a Tomás, un niño aventurero que nunca se perdía una sola noche estrellada. Tomás le contó que había visto una sombra pasar volando cerca de la ventana. "Era como un pájaro, pero no hacía ningún ruido", comentó con curiosidad. Pérez, con su lupa en mano, comenzó a buscar huellas y pistas.</p>
+<p>Casualmente, en la casa de Emma, encontró una pluma brillante que no pertenecía a ningún pájaro conocido. "¡Esto es obra de la Lechuza de los Sueños!", dedujo Pérez. La Lechuza de los Sueños era famosa por ser muy juguetona y le encantaba coleccionar cosas brillantes.</p>
+<p>Sin perder tiempo, Pérez siguió el rastro de plumas hasta llegar al Bosque Susurrante. Allí, escondida entre las sombras de los árboles, encontró a la Lechuza de los Sueños.</p>
+<p>"Lechuza, ¿sabes algo sobre los tesoros que faltan bajo las almohadas de los niños?", preguntó Pérez con voz firme, pero amigable.</p>
+<p>La Lechuza, sorprendida por ser descubierta, confesó: "Lo siento, Ratón Pérez. Vi tus tesoros brillar como la luz de la luna y no pude resistirme. Pero no sabía que eran tan importantes para los niños."</p>
+<p>Pérez sonrió y le explicó lo valioso que era cada regalo para cada niño. La Lechuza, sintiéndose culpable, prometió ayudar a Pérez a devolver cada tesoro a su legítimo dueño.</p>
+<p>Desde esa noche, la Lechuza de los Sueños y el Ratón Pérez trabajaron juntos. Ella, con su habilidad para volar silenciosamente, y él, con su mapa de estrellas y su corazón valiente, se aseguraron de que cada niño despertara con una sonrisa.</p>
+<p>Así, el misterio de los dientes desaparecidos fue resuelto gracias al trabajo en equipo y a la comprensión. Pérez, con su nueva amiga al lado, continuó su noble labor, recordando siempre que cada diente de leche era un tesoro y cada niño un mundo lleno de sueños.</p>
+<p>Y tú, ¿ya has dejado tu diente para el Ratón Pérez?</p></div>
+</div>
+</div>
+</div>
+</div>
+</article>
+<article class="iDevice_wrapper TrueFalseIdevice em_iDevice em_iDevice_question" id="id33">
+<div class="iDevice emphasis1" >
+<header class="iDevice_header"><h1 class="iDeviceTitle">RESPONDE LAS PREGUNTAS</h1></header>
+<div class="iDevice_inner">
+<div class="iDevice_content_wrapper">
+<div id="ta33_112" class="block iDevice_content">
+<p>Lee las afirmaciones y responde si es verdadero o falso. </p>
+<p></p>
+</div>
+<section class="question">
+<form name="true-false-form-0b33" action="#" class="activity-form">
+<h1 class="js-sr-av">Pregunta 1</h1>
+<div id="taquestion0b33" class="block iDevice_content">
+<p>El Ratón Pérez usaba una mochila pequeña y una capa de estrellas para volar y recoger los dientes.</p>
+</div>
+<p class="iDevice_answer js-required">
+<label for="true0b33"><input type="radio" name="option0b33" id="true0b33" class="exe-radio-option exe-radio-option-0-2-0b33-truefalse" /> Verdadero</label> 
+<label for="false0b33"><input type="radio" name="option0b33" id="false0b33" class="exe-radio-option exe-radio-option-1-2-0b33-truefalse" /> Falso</label>
+</p>
+</form>
+<section id="s0b33" class="feedback js-feedback js-hidden">
+<h1 class="js-sr-av">Retroalimentación</h1>
+<p><strong id="s0b33-result" class="right">Verdadero</strong></p>
+
+</section>
+</section>
+<section class="question">
+<form name="true-false-form-1b33" action="#" class="activity-form">
+<h1 class="js-sr-av">Pregunta 2</h1>
+<div id="taquestion1b33" class="block iDevice_content">
+<p>El Ratón Pérez visitó primero a Emma para comenzar su investigación.</p>
+</div>
+<p class="iDevice_answer js-required">
+<label for="true1b33"><input type="radio" name="option1b33" id="true1b33" class="exe-radio-option exe-radio-option-0-2-1b33-truefalse" /> Verdadero</label> 
+<label for="false1b33"><input type="radio" name="option1b33" id="false1b33" class="exe-radio-option exe-radio-option-1-2-1b33-truefalse" /> Falso</label>
+</p>
+</form>
+<section id="s1b33" class="feedback js-feedback js-hidden">
+<h1 class="js-sr-av">Retroalimentación</h1>
+<p><strong id="s1b33-result" class="wrong">Falso</strong></p>
+
+</section>
+</section>
+<section class="question">
+<form name="true-false-form-2b33" action="#" class="activity-form">
+<h1 class="js-sr-av">Pregunta 3</h1>
+<div id="taquestion2b33" class="block iDevice_content">
+<p>El Ratón Pérez encontró una pluma brillante que pertenecía a un pájaro conocido en la casa de Emma.</p>
+</div>
+<p class="iDevice_answer js-required">
+<label for="true2b33"><input type="radio" name="option2b33" id="true2b33" class="exe-radio-option exe-radio-option-0-2-2b33-truefalse" /> Verdadero</label> 
+<label for="false2b33"><input type="radio" name="option2b33" id="false2b33" class="exe-radio-option exe-radio-option-1-2-2b33-truefalse" /> Falso</label>
+</p>
+</form>
+<section id="s2b33" class="feedback js-feedback js-hidden">
+<h1 class="js-sr-av">Retroalimentación</h1>
+<p><strong id="s2b33-result" class="wrong">Falso</strong></p>
+
+</section>
+</section>
+<section class="question">
+<form name="true-false-form-3b33" action="#" class="activity-form">
+<h1 class="js-sr-av">Pregunta 4</h1>
+<div id="taquestion3b33" class="block iDevice_content">
+<p>La Lechuza de los Sueños se llevó los tesoros del Ratón Pérez porque sabía que eran importantes para los niños.</p>
+</div>
+<p class="iDevice_answer js-required">
+<label for="true3b33"><input type="radio" name="option3b33" id="true3b33" class="exe-radio-option exe-radio-option-0-2-3b33-truefalse" /> Verdadero</label> 
+<label for="false3b33"><input type="radio" name="option3b33" id="false3b33" class="exe-radio-option exe-radio-option-1-2-3b33-truefalse" /> Falso</label>
+</p>
+</form>
+<section id="s3b33" class="feedback js-feedback js-hidden">
+<h1 class="js-sr-av">Retroalimentación</h1>
+<p><strong id="s3b33-result" class="wrong">Falso</strong></p>
+
+</section>
+</section>
+<section class="question">
+<form name="true-false-form-4b33" action="#" class="activity-form">
+<h1 class="js-sr-av">Pregunta 5</h1>
+<div id="taquestion4b33" class="block iDevice_content">
+<p>El Ratón Pérez perdonó a la Lechuza porque ella se sintió culpable por su acción.</p>
+</div>
+<p class="iDevice_answer js-required">
+<label for="true4b33"><input type="radio" name="option4b33" id="true4b33" class="exe-radio-option exe-radio-option-0-2-4b33-truefalse" /> Verdadero</label> 
+<label for="false4b33"><input type="radio" name="option4b33" id="false4b33" class="exe-radio-option exe-radio-option-1-2-4b33-truefalse" /> Falso</label>
+</p>
+</form>
+<section id="s4b33" class="feedback js-feedback js-hidden">
+<h1 class="js-sr-av">Retroalimentación</h1>
+<p><strong id="s4b33-result" class="right">Verdadero</strong></p>
+
+</section>
+</section>
+</div>
+</div>
+</div>
+</article>
+<div id="packageLicense" class="cc cc-by-sa">
+<p><span>Obra publicada con</span> <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Reconocimiento Compartir igual 4.0</a></p>
+</div>
+</section>
+</div>
+<div id='bottomPagination'>
+<nav class="pagination noprt">
+<a href="index.html" class="prev"><span><span>&laquo; </span>Anterior</span></a> <span class="sep">| </span><a href="lets_play.html" class="next"><span>Siguiente<span> &raquo;</span></span></a>
+</nav>
+</div>
+<footer id="siteFooter">¡Bienvenidos al mundo de la lectura! Aquí cada página es una nueva aventura. ¡Prepárate para descubrir, soñar y aprender de una manera divertida!
+
+
+
+</footer></div>
+<p id="made-with-eXe"><a href="https://exelearning.net/" target="_blank" rel="noopener"><span>Creado con eXeLearning<span> (Ventana nueva)</span></span></a></p><script type="text/javascript" src="_intef_js.js"></script></body></html>
